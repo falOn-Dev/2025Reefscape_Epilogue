@@ -51,23 +51,23 @@ class ElevatorReal : Elevator() {
     )
     
     override val height: MutDistance = Meters.zero().mutableCopy()
-        @JvmSynthetic get() = field.mut_replace(
+        @NotLogged get() = field.mut_replace(
             leftMotor.position.valueAsDouble * 2 * Math.PI * drumRadius.into(Meters),
             Meters
         )
     override val velocity: MutLinearVelocity = MetersPerSecond.zero().mutableCopy()
-        @JvmSynthetic get() = field.mut_replace(
+        @NotLogged get() = field.mut_replace(
             leftMotor.velocity.valueAsDouble * 2 * Math.PI * drumRadius.into(Meters),
             MetersPerSecond
         )
     override val leftMotorVoltage: MutVoltage = Volts.zero().mutableCopy()
-        get() = field.mut_replace(leftMotor.motorVoltage.value)
+        @NotLogged get() = field.mut_replace(leftMotor.motorVoltage.value)
     override val leftMotorCurrent: MutCurrent = Amps.zero().mutableCopy()
-        @JvmSynthetic get() = field.mut_replace(leftMotor.statorCurrent.value)
+        @NotLogged get() = field.mut_replace(leftMotor.statorCurrent.value)
     override val rightMotorVoltage: MutVoltage = Volts.zero().mutableCopy()
-        @JvmSynthetic get() = field.mut_replace(rightMotor.motorVoltage.value)
+        @NotLogged get() = field.mut_replace(rightMotor.motorVoltage.value)
     override val rightMotorCurrent: MutCurrent = Amps.zero().mutableCopy()
-        @JvmSynthetic get() = field.mut_replace(rightMotor.statorCurrent.value)
+        @NotLogged get() = field.mut_replace(rightMotor.statorCurrent.value)
     
     private val followerRequest: Follower = Follower(leftID, true)
     private val positionRequest: MotionMagicVoltage = MotionMagicVoltage(0.0).withEnableFOC(true)

@@ -1,6 +1,7 @@
 package frc.robot.subsystems.elevator
 
 import edu.wpi.first.epilogue.Logged
+import edu.wpi.first.epilogue.NotLogged
 import edu.wpi.first.math.controller.ElevatorFeedforward
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.system.plant.DCMotor
@@ -20,7 +21,7 @@ import edu.wpi.first.wpilibj.simulation.ElevatorSim
 import lib.math.units.into
 
 @Logged
-class ElevatorSim: Elevator() {
+class ElevatorSim : Elevator() {
     private val elevatorSim: ElevatorSim = ElevatorSim(
         DCMotor.getKrakenX60Foc(2),
         5.0,
@@ -34,14 +35,26 @@ class ElevatorSim: Elevator() {
     
     private var isClosedLoop = false
     
+    @NotLogged
     private val pidController = PIDController(100.0, 0.0, 0.0)
     
+    @get:Logged(name = "height")
+    @NotLogged
     override val height: MutDistance = Meters.zero().mutableCopy()
         get() = field.mut_replace(elevatorSim.positionMeters, Meters)
+    
+    @get:Logged
+    @NotLogged
     override val velocity: MutLinearVelocity = MetersPerSecond.zero().mutableCopy()
         get() = field.mut_replace(elevatorSim.velocityMetersPerSecond, MetersPerSecond)
+    
+    @get:Logged
+    @NotLogged
     override val leftMotorCurrent: MutCurrent = Amps.zero().mutableCopy()
         get() = field.mut_replace(elevatorSim.currentDrawAmps, Amps)
+    
+    @get:Logged
+    @NotLogged
     override val rightMotorCurrent: MutCurrent = Amps.zero().mutableCopy()
         get() = field.mut_replace(elevatorSim.currentDrawAmps, Amps)
     
@@ -64,8 +77,8 @@ class ElevatorSim: Elevator() {
     
     override fun simulationPeriodic() {
         elevatorSim.update(0.02)
-        if(isClosedLoop) {
-            println("closed loop")
+        println(leftMotorCurrent)
+        if (isClosedLoop) {
             val voltage = pidController.calculate(height into Meters)
             setSimInputVoltage(voltage)
         }

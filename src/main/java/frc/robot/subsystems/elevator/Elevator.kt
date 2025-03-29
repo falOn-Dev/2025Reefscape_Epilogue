@@ -20,7 +20,7 @@ import lib.math.units.inches
 @Logged
 abstract class Elevator : SubsystemBase("elevator") {
     open val height: MutDistance = Meters.zero().mutableCopy()
-    open val targetHeight: MutDistance = Meters.zero().mutableCopy()
+    val targetHeight: MutDistance = Meters.zero().mutableCopy()
     open val velocity: MutLinearVelocity = MetersPerSecond.zero().mutableCopy()
     open val leftMotorVoltage: MutVoltage = Volts.zero().mutableCopy()
     open val rightMotorVoltage: MutVoltage = Volts.zero().mutableCopy()
